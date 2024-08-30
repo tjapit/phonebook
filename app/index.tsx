@@ -19,7 +19,7 @@ const App = () => {
         <View>
           <Pressable
             onPress={() => router.push("/contacts")}
-            className="p-4 min-h-max justify-center items-center bg-white rounded-full"
+            className="p-4 min-h-max justify-center items-center bg-white rounded-full active:opacity-80"
           >
             <Text className="text-xl font-semibold">Open Phonebook</Text>
           </Pressable>

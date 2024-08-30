@@ -24,7 +24,7 @@ const ContactsList = ({ data }: ContactsListProps) => {
               dispatch(selectContact(contact));
               router.push(`/contacts/${contact.id}`);
             }}
-            className="overflow-hidden"
+            className="overflow-hidden active:opacity-80"
           >
             <View>
               <Text className="text-xl text-white">{contact.name}</Text>

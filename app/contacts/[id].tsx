@@ -11,7 +11,7 @@ const ContactDetails = () => {
 
   return (
     <AppGradient>
-      <Pressable onPress={() => router.back()}>
+      <Pressable onPress={() => router.back()} className="active:opacity-80">
         <AntDesign name="leftcircleo" size={50} color="white" />
       </Pressable>
 
