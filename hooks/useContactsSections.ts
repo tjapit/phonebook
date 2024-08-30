@@ -5,9 +5,7 @@ import { fetchContacts } from "@/store/features/contacts/contactsSlice";
 
 export function useContactsSections() {
   const dispatch = useAppDispatch();
-  const { data, loading, error } = useAppSelector(
-    (state) => state.contactsList,
-  );
+  const { data, loading, error } = useAppSelector((state) => state.contacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
