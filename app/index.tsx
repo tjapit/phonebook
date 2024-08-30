@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -23,16 +23,16 @@ const App = () => {
 
   if (loading) {
     return (
-      <View className="flex-1">
-        <Text>Loading...</Text>
-      </View>
+      <AppGradient colors={[Colors.grey, Colors.dark]}>
+        <ActivityIndicator size="large" />
+      </AppGradient>
     );
   }
   if (error) {
     return (
-      <View className="flex-1">
-        <Text>Error: {error}</Text>
-      </View>
+      <AppGradient colors={[Colors.grey, Colors.dark]}>
+        <Text className="text-xl text-red-400">Error: {error}</Text>
+      </AppGradient>
     );
   }
 
