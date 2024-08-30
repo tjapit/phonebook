@@ -6,20 +6,20 @@ import {
   requestPermissionsAsync,
 } from "expo-contacts";
 
-export interface ContactsListState {
+export interface ContactsState {
   data: Contact[];
   loading: boolean;
   error: string | undefined;
 }
 
-const initialState: ContactsListState = {
+const initialState: ContactsState = {
   data: [],
   loading: false,
   error: undefined,
 };
 
-export const fetchContactsList = createAsyncThunk(
-  "contactsList/fetchContactsList",
+export const fetchContacts = createAsyncThunk(
+  "contactsList/fetchContacts",
   async () => {
     const { status } = await requestPermissionsAsync();
     if (status === "granted") {
@@ -31,25 +31,25 @@ export const fetchContactsList = createAsyncThunk(
   },
 );
 
-export const contactsListSlice = createSlice({
-  name: "contactsList",
+export const contactsSlice = createSlice({
+  name: "contacts",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchContactsList.pending, (state) => {
+      .addCase(fetchContacts.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchContactsList.fulfilled, (state, action) => {
+      .addCase(fetchContacts.fulfilled, (state, action) => {
         if (!action.payload) return;
         state.loading = false;
         state.data = action.payload;
       })
-      .addCase(fetchContactsList.rejected, (state, action) => {
+      .addCase(fetchContacts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
   },
 });
 
-export default contactsListSlice.reducer;
+export default contactsSlice.reducer;
