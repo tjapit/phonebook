@@ -1,6 +1,7 @@
-import { View, Text, SectionList } from "react-native";
+import { View, Text, SectionList, Pressable } from "react-native";
 import React from "react";
 import { ContactsSection } from "@/constants/models";
+import { router } from "expo-router";
 
 interface ContactsListProps {
   data: ContactsSection[];
@@ -13,13 +14,19 @@ const ContactsList = ({ data }: ContactsListProps) => {
         sections={data}
         keyExtractor={(contact, index) => contact.name + index}
         renderItem={(contact) => (
-          <View>
-            <Text className="text-2xl text-white">{contact.item.name}</Text>
-          </View>
+          <Pressable
+            onPress={() => router.push(`/contacts/${contact.item.id}`)}
+            className="my-3 rounded-full overflow-hidden"
+          >
+            <View className="p-4 border rounded-full border-white/80">
+              <Text className="text-2xl text-white">{contact.item.name}</Text>
+            </View>
+          </Pressable>
         )}
         renderSectionHeader={({ section: { title } }) => (
           <Text className="text-3xl text-white font-bold">{title}</Text>
         )}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

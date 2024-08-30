@@ -1,37 +1,32 @@
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, SafeAreaView, Pressable } from "react-native";
 import React from "react";
-import { StatusBar } from "expo-status-bar";
 import AppGradient from "@/components/AppGradient";
-import Colors from "@/constants/Colors";
-import ContactsList from "@/components/ContactsList";
-import { useContactsSections } from "@/hooks/useContactsSections";
+import { router } from "expo-router";
 
 const App = () => {
-  const { contactsSections, loading, error } = useContactsSections();
-
-  if (loading) {
-    return (
-      <AppGradient colors={[Colors.grey, Colors.dark]}>
-        <ActivityIndicator size="large" />
-      </AppGradient>
-    );
-  }
-  if (error) {
-    return (
-      <AppGradient colors={[Colors.grey, Colors.dark]}>
-        <Text className="text-xl text-red-400">Error: {error}</Text>
-      </AppGradient>
-    );
-  }
-
   return (
     <View className="flex-1">
-      <AppGradient colors={[Colors.primary, Colors.dark]}>
-        <Text className="my-10 text-4xl text-white font-bold">Contacts</Text>
-        <ContactsList data={contactsSections} />
-      </AppGradient>
+      <AppGradient>
+        <SafeAreaView className="flex-1 my-10 justify-between">
+          <View>
+            <Text className="text-center text-white font-bold text-4xl">
+              Phonebook
+            </Text>
+            <Text className="mt-3 text-center text-white text-2xl">
+              Get your contacts right here!
+            </Text>
+          </View>
 
-      <StatusBar style="light" />
+          <View>
+            <Pressable
+              onPress={() => router.push("/contacts")}
+              className="p-4 min-h-max justify-center items-center bg-white rounded-full"
+            >
+              <Text className="text-xl font-semibold">Open Phonebook</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </AppGradient>
     </View>
   );
 };
