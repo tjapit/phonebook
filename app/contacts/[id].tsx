@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import AppGradient from "@/components/AppGradient";
 import { useAppSelector } from "@/hooks";
 import { AntDesign } from "@expo/vector-icons";
+import ContactCard from "@/components/ContactCard";
 
 const ContactDetails = () => {
   const { data: contact } = useAppSelector((state) => state.selectedContact);
@@ -14,9 +15,9 @@ const ContactDetails = () => {
         <AntDesign name="leftcircleo" size={50} color="white" />
       </Pressable>
 
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 py-4">
         {contact ? (
-          <Text className="text-white text-lg">{contact.name}</Text>
+          <ContactCard contact={contact} />
         ) : (
           <Text className="text-4xl text-white font-bold">
             No detail found!

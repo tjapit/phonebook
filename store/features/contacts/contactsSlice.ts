@@ -24,7 +24,14 @@ export const fetchContacts = createAsyncThunk(
     const { status } = await requestPermissionsAsync();
     if (status === "granted") {
       const { data } = await getContactsAsync({
-        fields: [Fields.Emails, Fields.PhoneNumbers],
+        fields: [
+          Fields.Emails,
+          Fields.PhoneNumbers,
+          Fields.Image,
+          Fields.Company,
+          Fields.JobTitle,
+          Fields.Birthday,
+        ],
       });
       return data;
     }

@@ -17,18 +17,16 @@ const ContactsList = ({ data }: ContactsListProps) => {
       <SectionList
         sections={data}
         keyExtractor={(contact, index) => contact.name + index}
-        renderItem={(sectionItem) => (
+        renderItem={({ item: contact }) => (
           <Pressable
             onPress={() => {
-              dispatch(selectContact(sectionItem.item));
-              router.push(`/contacts/${sectionItem.item.id}`);
+              dispatch(selectContact(contact));
+              router.push(`/contacts/${contact.id}`);
             }}
             className="my-3 rounded-full overflow-hidden"
           >
             <View className="p-4 border rounded-full border-white/80">
-              <Text className="text-2xl text-white">
-                {sectionItem.item.name}
-              </Text>
+              <Text className="text-2xl text-white">{contact.name}</Text>
             </View>
           </Pressable>
         )}
