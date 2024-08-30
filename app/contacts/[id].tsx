@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import AppGradient from "@/components/AppGradient";
 import { useAppSelector } from "@/hooks";
 import { AntDesign } from "@expo/vector-icons";
-import ContactCard from "@/components/ContactCard";
+import ContactCard from "@/components/contact-details/ContactCard";
 
 const ContactDetails = () => {
   const { data: contact } = useAppSelector((state) => state.selectedContact);

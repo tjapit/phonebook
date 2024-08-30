@@ -27,6 +27,7 @@ export const fetchContacts = createAsyncThunk(
         fields: [
           Fields.Emails,
           Fields.PhoneNumbers,
+          Fields.Addresses,
           Fields.Image,
           Fields.Company,
           Fields.JobTitle,
