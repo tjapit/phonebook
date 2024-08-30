@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "@/store/features/counter/counterSlice";
 import contactsReducer from "@/store/features/contacts/contactsSlice";
 import selectedContactReducer from "./features/contacts/selectedContactSlice";
+import favoriteReducer from "./features/contacts/favoriteSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     contacts: contactsReducer,
     selectedContact: selectedContactReducer,
+    favorite: favoriteReducer,
   },
 });
 
