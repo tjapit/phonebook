@@ -4,9 +4,9 @@ import { ContactsSection } from "@/constants/models";
 import { router } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { selectContact } from "@/store/features/contacts/selectedContactSlice";
-import { toggleFavorite } from "@/store/features/contacts/favoriteSlice";
 import Separator from "./Separator";
 import { AntDesign } from "@expo/vector-icons";
+import FavoriteButton from "./FavoriteButton";
 
 interface ContactsListProps {
   data: ContactsSection[];
@@ -60,16 +60,7 @@ const ContactsList = ({ data }: ContactsListProps) => {
             >
               <View className="flex-row justify-between">
                 <Text className="text-xl text-white">{contact.name}</Text>
-                <Pressable
-                  className="active:opacity-80"
-                  onPress={() => dispatch(toggleFavorite(contact))}
-                >
-                  {favorite?.id === contact.id ? (
-                    <AntDesign name="star" size={25} color="gold" />
-                  ) : (
-                    <AntDesign name="staro" size={25} color="white" />
-                  )}
-                </Pressable>
+                <FavoriteButton selectedContact={contact} />
               </View>
             </Pressable>
           )}

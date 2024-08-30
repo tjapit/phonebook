@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Separator from "../Separator";
 import ContactDetailContainer from "./ContactDetailContainer";
 import { getBirthday } from "@/utils";
+import FavoriteButton from "../FavoriteButton";
 
 interface ContactCardProps {
   contact: Contact;
@@ -13,7 +14,7 @@ interface ContactCardProps {
 const ContactCard = ({ contact }: ContactCardProps) => {
   return (
     <View className="flex-1 gap-4">
-      <View className="p-6 justify-center items-center bg-black/40 rounded-3xl">
+      <View className="relative p-6 justify-center items-center bg-black/40 rounded-3xl">
         {contact.image ? (
           <Image src={contact.image.uri} resizeMode="cover" width={240} />
         ) : (
@@ -24,6 +25,7 @@ const ContactCard = ({ contact }: ContactCardProps) => {
             className="min-w-max"
           />
         )}
+
         <View className="flex-row">
           {contact.jobTitle && (
             <Text className="text-lg text-white/60">{contact.jobTitle}</Text>
@@ -35,9 +37,16 @@ const ContactCard = ({ contact }: ContactCardProps) => {
             <Text className="text-lg text-white/60">{contact.company}</Text>
           )}
         </View>
-        <Text className="text-4xl text-white font-semibold">
-          {contact.name}
-        </Text>
+
+        <View>
+          <Text className="text-4xl text-white font-semibold">
+            {contact.name}
+          </Text>
+        </View>
+
+        <View className="absolute -bottom-2 -right-2">
+          <FavoriteButton selectedContact={contact} size={48} />
+        </View>
       </View>
 
       <View>
