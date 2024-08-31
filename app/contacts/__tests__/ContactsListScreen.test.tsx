@@ -1,6 +1,5 @@
-import React from "react";
-import ContactsListScreen from "..";
 import { render } from "@testing-library/react-native";
+import ContactsListScreen from "@/app/contacts/index";
 
 describe("Contacts List", () => {
   it("should render the contacts list", () => {
