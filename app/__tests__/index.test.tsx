@@ -8,6 +8,6 @@ describe("<App />", () => {
 
     getByText("Phonebook");
     getByText("Get your contacts right here!");
-    getByText("Open Phonebook")
+    getByText("Open Phonebook");
   });
 });
