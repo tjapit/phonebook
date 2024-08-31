@@ -4,7 +4,7 @@ import AppGradient from "@/components/AppGradient";
 import { useContactsSections } from "@/hooks/useContactsSections";
 import ContactsList from "@/components/ContactsList";
 
-const Contacts = () => {
+const ContactsListScreen = () => {
   const { contactsSections, loading, error } = useContactsSections();
 
   if (loading) {
@@ -29,4 +29,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default ContactsListScreen;

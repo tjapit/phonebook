@@ -6,7 +6,7 @@ import { useAppSelector } from "@/hooks";
 import { AntDesign } from "@expo/vector-icons";
 import ContactCard from "@/components/contact-details/ContactCard";
 
-const ContactDetails = () => {
+const ContactDetailsScreen = () => {
   const { data: contact } = useAppSelector((state) => state.selectedContact);
 
   return (
@@ -28,4 +28,4 @@ const ContactDetails = () => {
   );
 };
 
-export default ContactDetails;
+export default ContactDetailsScreen;
