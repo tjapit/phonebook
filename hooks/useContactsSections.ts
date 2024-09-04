@@ -1,7 +1,8 @@
 import { ContactsSection } from "@/constants/models";
 import { useAppDispatch, useAppSelector } from ".";
-import { useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { fetchContacts } from "@/store/features/contacts/contactsSlice";
+import { useFocusEffect } from "@react-navigation/native";
 
 export function useContactsSections() {
   const dispatch = useAppDispatch();
@@ -10,10 +11,11 @@ export function useContactsSections() {
     loading,
     error,
   } = useAppSelector((state) => state.contacts);
-
-  useEffect(() => {
+  const refetch = useCallback(() => {
     dispatch(fetchContacts());
-  }, [dispatch]); // added dispatch to dep array to avoid potential issues with stale closures
+  }, [dispatch]);
+
+  useFocusEffect(refetch);
 
   // useMemo to avoid recalculating on every render unless data changes
   const contactsSections = useMemo(() => {
@@ -37,5 +39,5 @@ export function useContactsSections() {
     );
   }, [data]);
 
-  return { contactsSections, loading, error };
+  return { contactsSections, loading, error, refetch };
 }
