@@ -46,34 +46,32 @@ const ContactsList = ({ data }: ContactsListProps) => {
           </View>
         </Pressable>
       </View>
-      <View className="flex-1 px-4 bg-black/40 rounded-3xl">
-        <SectionList
-          sections={data}
-          keyExtractor={(contact, index) => contact.name + index}
-          renderItem={({ item: contact }) => (
-            <Pressable
-              onPress={() => {
-                dispatch(selectContact(contact));
-                router.push(`/contacts/${contact.id}`);
-              }}
-              className="overflow-hidden active:opacity-80"
-            >
-              <View className="flex-row justify-between">
-                <Text className="text-xl text-white">{contact.name}</Text>
-                <FavoriteButton selectedContact={contact} />
-              </View>
-            </Pressable>
-          )}
-          renderSectionHeader={({ section: { title } }) => (
-            <View className="mt-6">
-              <Text className="text-3xl text-white font-bold">{title}</Text>
+      <SectionList
+        sections={data}
+        keyExtractor={(contact, index) => contact.name + index}
+        renderItem={({ item: contact }) => (
+          <Pressable
+            onPress={() => {
+              dispatch(selectContact(contact));
+              router.push(`/contacts/${contact.id}`);
+            }}
+            className="overflow-hidden active:opacity-80"
+          >
+            <View className="flex-row justify-between">
+              <Text className="text-xl text-white">{contact.name}</Text>
+              <FavoriteButton selectedContact={contact} />
             </View>
-          )}
-          ItemSeparatorComponent={() => <Separator />}
-          SectionSeparatorComponent={() => <Separator />}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+          </Pressable>
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <View className="mt-6">
+            <Text className="text-3xl text-white font-bold">{title}</Text>
+          </View>
+        )}
+        ItemSeparatorComponent={() => <Separator />}
+        SectionSeparatorComponent={() => <Separator />}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
