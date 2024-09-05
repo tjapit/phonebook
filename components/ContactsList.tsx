@@ -7,6 +7,7 @@ import { selectContact } from "@/store/features/contacts/selectedContactSlice";
 import Separator from "./Separator";
 import { AntDesign } from "@expo/vector-icons";
 import FavoriteButton from "./FavoriteButton";
+import DeleteButton from "./DeleteButton";
 
 interface ContactsListProps {
   data: ContactsSection[];
@@ -59,7 +60,10 @@ const ContactsList = ({ data }: ContactsListProps) => {
           >
             <View className="flex-row justify-between">
               <Text className="text-xl text-white">{contact.name}</Text>
-              <FavoriteButton selectedContact={contact} />
+              <View className="flex-row" style={{ gap: 6 }}>
+                <DeleteButton selectedContact={contact} />
+                <FavoriteButton selectedContact={contact} />
+              </View>
             </View>
           </Pressable>
         )}
