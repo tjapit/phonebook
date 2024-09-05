@@ -3,6 +3,7 @@ import {
   Contact,
   Fields,
   getContactsAsync,
+  removeContactAsync,
   requestPermissionsAsync,
 } from "expo-contacts";
 
@@ -36,11 +37,28 @@ export const fetchContacts = createAsyncThunk("contacts/fetch", async () => {
   }
 });
 
+export const deleteContact = createAsyncThunk(
+  "selectedContact/delete",
+  async (contactID: string) => {
+    if (!contactID) return;
+    const { status } = await requestPermissionsAsync();
+    try {
+      if (status === "granted") {
+        await removeContactAsync(contactID);
+        return contactID;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  },
+);
+
 export const contactsSlice = createSlice({
   name: "contacts",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // fetch
     builder
       .addCase(fetchContacts.pending, (state) => {
         state.loading = true;
@@ -51,6 +69,23 @@ export const contactsSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchContacts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+
+    // delete
+    builder
+      .addCase(deleteContact.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        if (!action.payload) return;
+        state.loading = false;
+        state.data = state.data.filter(
+          (contact) => contact.id !== action.payload,
+        );
+      })
+      .addCase(deleteContact.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

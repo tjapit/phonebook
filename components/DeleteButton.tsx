@@ -3,7 +3,7 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Contact } from "expo-contacts";
 import { useAppDispatch } from "@/hooks";
-import { deleteContact } from "@/store/features/contacts/selectedContactSlice";
+import { deleteContact } from "@/store/features/contacts/contactsSlice";
 
 interface DeleteButtonProps {
   className?: string;
