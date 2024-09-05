@@ -18,26 +18,23 @@ const initialState: ContactsState = {
   error: undefined,
 };
 
-export const fetchContacts = createAsyncThunk(
-  "contactsList/fetchContacts",
-  async () => {
-    const { status } = await requestPermissionsAsync();
-    if (status === "granted") {
-      const { data } = await getContactsAsync({
-        fields: [
-          Fields.Emails,
-          Fields.PhoneNumbers,
-          Fields.Addresses,
-          Fields.Image,
-          Fields.Company,
-          Fields.JobTitle,
-          Fields.Birthday,
-        ],
-      });
-      return data;
-    }
-  },
-);
+export const fetchContacts = createAsyncThunk("contacts/fetch", async () => {
+  const { status } = await requestPermissionsAsync();
+  if (status === "granted") {
+    const { data } = await getContactsAsync({
+      fields: [
+        Fields.Emails,
+        Fields.PhoneNumbers,
+        Fields.Addresses,
+        Fields.Image,
+        Fields.Company,
+        Fields.JobTitle,
+        Fields.Birthday,
+      ],
+    });
+    return data;
+  }
+});
 
 export const contactsSlice = createSlice({
   name: "contacts",
