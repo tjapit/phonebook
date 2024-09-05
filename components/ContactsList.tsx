@@ -1,6 +1,11 @@
-import { View, Text, SectionList, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  SectionList,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
-import { ContactsSection } from "@/constants/models";
 import { router } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { selectContact } from "@/store/features/contacts/selectedContactSlice";
@@ -8,15 +13,19 @@ import Separator from "./Separator";
 import { AntDesign } from "@expo/vector-icons";
 import FavoriteButton from "./FavoriteButton";
 import DeleteButton from "./DeleteButton";
+import { useContactsSections } from "@/hooks/useContactsSections";
 
-interface ContactsListProps {
-  data: ContactsSection[];
-}
-
-const ContactsList = ({ data }: ContactsListProps) => {
+const ContactsList = () => {
   const dispatch = useAppDispatch();
   const { data: favorite } = useAppSelector((state) => state.favorite);
+  const { contactsSections, loading, error } = useContactsSections();
 
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+  if (error) {
+    return <Text className="text-xl text-red-400">Error: {error}</Text>;
+  }
   return (
     <View className="flex-1 justify-between gap-2">
       <View className="px-4 bg-black/40 rounded-3xl">
@@ -48,7 +57,7 @@ const ContactsList = ({ data }: ContactsListProps) => {
         </Pressable>
       </View>
       <SectionList
-        sections={data}
+        sections={contactsSections}
         keyExtractor={(contact, index) => contact.name + index}
         renderItem={({ item: contact }) => (
           <Pressable
