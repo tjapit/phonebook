@@ -34,9 +34,16 @@ export function useContactsSections() {
       {}, // use map instead of finding the section and pushing data into it
     );
 
-    return Object.values(sectionsMap).sort((a, b) =>
+    const sectionsList = Object.values(sectionsMap).sort((a, b) =>
       a.title.localeCompare(b.title),
     );
+
+    sectionsList.forEach((section) => {
+      if (section.data.length === 0) return;
+      section.data.sort((a, b) => a.name.localeCompare(b.name));
+    }); // sort the names inside of each section
+
+    return sectionsList;
   }, [data]);
 
   return { contactsSections, loading, error, refetch };
