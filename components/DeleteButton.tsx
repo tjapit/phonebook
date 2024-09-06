@@ -1,4 +1,4 @@
-import { Pressable } from "react-native";
+import { Alert, Pressable } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Contact } from "expo-contacts";
@@ -20,15 +20,35 @@ const DeleteButton = ({
   const dispatch = useAppDispatch();
   const { data: favorite } = useAppSelector((state) => state.favorite);
 
+  const handleDelete = () => {
+    dispatch(deleteContact(String(selectedContact.id)));
+    if (selectedContact.id === favorite?.id) {
+      dispatch(toggleFavorite(selectedContact));
+    }
+  };
+
+  const handleClickDelete = () => {
+    Alert.alert(
+      "Delete Contact?",
+      `Are you sure you want to delete ${selectedContact.name} from your phonebook?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: handleDelete,
+        },
+      ],
+    );
+  };
+
   return (
     <Pressable
       className={`active:opacity-80 ${className}`}
-      onPress={() => {
-        dispatch(deleteContact(String(selectedContact.id)));
-        if (selectedContact.id === favorite?.id) {
-          dispatch(toggleFavorite(selectedContact));
-        }
-      }}
+      onPress={handleClickDelete}
     >
       <AntDesign name="delete" size={size} color="red" />
     </Pressable>
