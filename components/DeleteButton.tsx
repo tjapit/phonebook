@@ -28,21 +28,17 @@ const DeleteButton = ({
   };
 
   const handleClickDelete = () => {
-    Alert.alert(
-      "Delete Contact?",
-      `Are you sure you want to delete ${selectedContact.name} from your phonebook?`,
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: handleDelete,
-        },
-      ],
-    );
+    Alert.alert(`Delete "${selectedContact.name}"?`, "", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: handleDelete,
+      },
+    ]);
   };
 
   return (
