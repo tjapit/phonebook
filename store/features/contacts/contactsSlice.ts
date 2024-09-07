@@ -3,6 +3,7 @@ import {
   Contact,
   Fields,
   getContactsAsync,
+  removeContactAsync,
   requestPermissionsAsync,
 } from "expo-contacts";
 
@@ -18,23 +19,36 @@ const initialState: ContactsState = {
   error: undefined,
 };
 
-export const fetchContacts = createAsyncThunk(
-  "contactsList/fetchContacts",
-  async () => {
+export const fetchContacts = createAsyncThunk("contacts/fetch", async () => {
+  const { status } = await requestPermissionsAsync();
+  if (status === "granted") {
+    const { data } = await getContactsAsync({
+      fields: [
+        Fields.Emails,
+        Fields.PhoneNumbers,
+        Fields.Addresses,
+        Fields.Image,
+        Fields.Company,
+        Fields.JobTitle,
+        Fields.Birthday,
+      ],
+    });
+    return data;
+  }
+});
+
+export const deleteContact = createAsyncThunk(
+  "selectedContact/delete",
+  async (contactID: string) => {
+    if (!contactID) return;
     const { status } = await requestPermissionsAsync();
-    if (status === "granted") {
-      const { data } = await getContactsAsync({
-        fields: [
-          Fields.Emails,
-          Fields.PhoneNumbers,
-          Fields.Addresses,
-          Fields.Image,
-          Fields.Company,
-          Fields.JobTitle,
-          Fields.Birthday,
-        ],
-      });
-      return data;
+    try {
+      if (status === "granted") {
+        await removeContactAsync(contactID);
+        return contactID;
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   },
 );
@@ -44,6 +58,7 @@ export const contactsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // fetch
     builder
       .addCase(fetchContacts.pending, (state) => {
         state.loading = true;
@@ -54,6 +69,23 @@ export const contactsSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchContacts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+
+    // delete
+    builder
+      .addCase(deleteContact.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        if (!action.payload) return;
+        state.loading = false;
+        state.data = state.data.filter(
+          (contact) => contact.id !== action.payload,
+        );
+      })
+      .addCase(deleteContact.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

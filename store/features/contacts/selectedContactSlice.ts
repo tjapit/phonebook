@@ -1,12 +1,16 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction,  createSlice } from "@reduxjs/toolkit";
 import { Contact } from "expo-contacts";
 
 export interface SelectedContactState {
   data: Contact | undefined;
+  loading: boolean;
+  error: string | undefined;
 }
 
 const initialState: SelectedContactState = {
   data: undefined,
+  loading: false,
+  error: undefined,
 };
 
 export const selectedContactSlice = createSlice({
@@ -19,6 +23,6 @@ export const selectedContactSlice = createSlice({
   },
 });
 
-export const {selectContact}  = selectedContactSlice.actions;
+export const { selectContact } = selectedContactSlice.actions;
 
 export default selectedContactSlice.reducer;
