@@ -11,16 +11,24 @@ const ContactsListScreen = () => {
   const [filteredData, setFilteredData] =
     useState<ContactsSection[]>(contactsSections);
 
-  const handleChangeText = (text: string) => {
-    setQuery(text);
+  const handleChangeQuery = (query: string) => {
+    const lowerCaseQuery = query.toLowerCase();
+    setQuery(lowerCaseQuery);
 
-    if (text === "") {
+    if (lowerCaseQuery === "") {
       setFilteredData(contactsSections);
     } else {
       setFilteredData(
-        contactsSections.filter(
-          (section) => section.title.toLowerCase() === text,
-        ),
+        contactsSections
+          .map(
+            (section): ContactsSection => ({
+              ...section,
+              data: section.data.filter((contact) =>
+                contact.name.toLowerCase().includes(lowerCaseQuery),
+              ),
+            }),
+          )
+          .filter((section) => section.data.length > 0),
       );
     }
   };
@@ -46,7 +54,7 @@ const ContactsListScreen = () => {
         className="mb-4 p-4 bg-white rounded-3xl text-xl"
         value={query}
         autoCapitalize="none"
-        onChangeText={handleChangeText}
+        onChangeText={handleChangeQuery}
       />
       <ContactsList data={filteredData} />
     </AppGradient>
