@@ -15,7 +15,7 @@ export interface ContactsState {
 
 const initialState: ContactsState = {
   data: [],
-  loading: false,
+  loading: true,
   error: undefined,
 };
 

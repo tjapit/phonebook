@@ -5,12 +5,16 @@ import { AntDesign } from "@expo/vector-icons";
 import { selectContact } from "@/store/features/contacts/selectedContactSlice";
 import { router } from "expo-router";
 
-const FavoriteBar = () => {
+interface FavoriteBarProps {
+  styleName: string;
+}
+
+const FavoriteBar = ({ styleName }: FavoriteBarProps) => {
   const dispatch = useAppDispatch();
   const { data: favorite } = useAppSelector((state) => state.favorite);
 
   return (
-    <View className="px-4 bg-black/40 rounded-3xl">
+    <View className={`${styleName} px-4 bg-black/40 rounded-3xl`}>
       {favorite ? (
         <Pressable
           className="my-4 active:opacity-80"
