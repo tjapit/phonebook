@@ -17,7 +17,7 @@ const ContactsList = ({ data }: ContactsListProps) => {
   const { data: favorite } = useAppSelector((state) => state.favorite);
 
   return (
-    <View className="flex justify-between gap-2">
+    <View className="flex-1 justify-between gap-2">
       <View className="px-4 bg-black/40 rounded-3xl">
         <Pressable
           className="my-4 active:opacity-80"
@@ -46,7 +46,7 @@ const ContactsList = ({ data }: ContactsListProps) => {
           </View>
         </Pressable>
       </View>
-      <View className="px-4 bg-black/40 rounded-3xl">
+      <View className="flex-1 px-4 bg-black/40 rounded-3xl">
         <SectionList
           sections={data}
           keyExtractor={(contact, index) => contact.name + index}
