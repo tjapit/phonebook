@@ -2,11 +2,8 @@ import { View, Text, SectionList, ActivityIndicator } from "react-native";
 import React from "react";
 import { useContactsSections } from "@/hooks/useContactsSections";
 import { SearchBar, Separator } from "@/components";
-import {
-  ContactsRow,
-  ContactsSectionHeader,
-  FavoriteBar,
-} from "@/components/contact-list";
+import ContactsRow from "./ContactsRow";
+import ContactsSectionHeader from "./ContactsSectionHeader";
 
 const ContactsList = () => {
   const { contactsSections, loading, error, query, handleChangeQuery } =
