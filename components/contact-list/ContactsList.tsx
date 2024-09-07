@@ -1,25 +1,14 @@
-import {
-  View,
-  Text,
-  SectionList,
-  Pressable,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, SectionList, ActivityIndicator } from "react-native";
 import React from "react";
-import { router } from "expo-router";
-import { useAppDispatch } from "@/hooks";
-import { selectContact } from "@/store/features/contacts/selectedContactSlice";
 import { useContactsSections } from "@/hooks/useContactsSections";
+import { SearchBar, Separator } from "@/components";
 import {
-  FavoriteButton,
-  DeleteButton,
-  SearchBar,
-  Separator,
-} from "@/components";
-import FavoriteBar from "./FavoriteBar";
+  ContactsRow,
+  ContactsSectionHeader,
+  FavoriteBar,
+} from "@/components/contact-list";
 
 const ContactsList = () => {
-  const dispatch = useAppDispatch();
   const { contactsSections, loading, error, query, handleChangeQuery } =
     useContactsSections();
 
@@ -36,27 +25,9 @@ const ContactsList = () => {
       <SectionList
         sections={contactsSections}
         keyExtractor={(contact, index) => contact.name + index}
-        renderItem={({ item: contact }) => (
-          <Pressable
-            onPress={() => {
-              dispatch(selectContact(contact));
-              router.push(`/contacts/${contact.id}`);
-            }}
-            className="overflow-hidden active:opacity-80"
-          >
-            <View className="flex-row justify-between">
-              <Text className="text-xl text-white">{contact.name}</Text>
-              <View className="flex-row" style={{ gap: 6 }}>
-                <DeleteButton selectedContact={contact} />
-                <FavoriteButton selectedContact={contact} />
-              </View>
-            </View>
-          </Pressable>
-        )}
+        renderItem={({ item: contact }) => <ContactsRow contact={contact} />}
         renderSectionHeader={({ section: { title } }) => (
-          <View className="mt-6">
-            <Text className="text-3xl text-white font-bold">{title}</Text>
-          </View>
+          <ContactsSectionHeader title={title} />
         )}
         ItemSeparatorComponent={() => <Separator />}
         SectionSeparatorComponent={() => <Separator />}

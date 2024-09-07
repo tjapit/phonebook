@@ -4,7 +4,7 @@ import { Contact } from "expo-contacts";
 import { Ionicons } from "@expo/vector-icons";
 import { getBirthday } from "@/utils";
 import { FavoriteButton, Separator } from "@/components";
-import ContactDetailContainer from "./ContactDetailContainer";
+import { ContactDetailContainer } from "@/components/contact-details";
 
 interface ContactCardProps {
   contact: Contact;
