@@ -40,7 +40,7 @@ export function useContactsSections() {
     ); // sort by name within the section
 
     return query ? filterContacts(sections, query) : sections;
-  }, [data]);
+  }, [data, query]);
 
   const handleChangeQuery = (q: string): ContactsSection[] => {
     const qLowercase = q.toLowerCase();
