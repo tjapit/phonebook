@@ -1,24 +1,31 @@
 import { ContactsSection } from "@/constants/models";
 import { useAppDispatch, useAppSelector } from ".";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { fetchContacts } from "@/store/features/contacts/contactsSlice";
 import { filterContacts } from "@/utils";
 import { useFocusEffect } from "expo-router";
+import { Contact } from "expo-contacts";
 
 export function useContactsSections() {
   const dispatch = useAppDispatch();
   const { data, loading, error } = useAppSelector((state) => state.contacts);
+  const [filteredData, setFilteredData] = useState<Contact[]>([]);
   const [query, setQuery] = useState("");
 
   const refetch = useCallback(() => {
     dispatch(fetchContacts());
+    setFilteredData(data);
   }, [dispatch]);
 
   useFocusEffect(refetch);
 
+  useEffect(() => {
+    if (data.length > 0) setFilteredData(data);
+  }, [data]);
+
   // useMemo to avoid recalculating on every render unless data changes
   const contactsSections = useMemo(() => {
-    const sectionsMap = data.reduce<Record<string, ContactsSection>>(
+    const sectionsMap = filteredData.reduce<Record<string, ContactsSection>>(
       (map, contact) => {
         const firstLetter = contact.name[0].toUpperCase();
 
@@ -32,20 +39,14 @@ export function useContactsSections() {
       {},
     ); // use map instead of finding the section and pushing data into it
 
-    const sections = Object.values(sectionsMap).sort((a, b) =>
-      a.title.localeCompare(b.title),
-    ); // sort by section
-    sections.forEach((section) =>
-      section.data.sort((a, b) => a.name.localeCompare(b.name)),
-    ); // sort by name within the section
+    // return sections;
+    return Object.values(sectionsMap);
+  }, [filteredData]);
 
-    return query ? filterContacts(sections, query) : sections;
-  }, [data, query]);
-
-  const handleChangeQuery = (q: string): ContactsSection[] => {
+  const handleChangeQuery = (q: string) => {
     const qLowercase = q.toLowerCase();
     setQuery(qLowercase);
-    return filterContacts(contactsSections, qLowercase);
+    setFilteredData(filterContacts(data, qLowercase));
   };
 
   return {

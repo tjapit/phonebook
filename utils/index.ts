@@ -1,4 +1,3 @@
-import { ContactsSection } from "@/constants/models";
 import { Contact } from "expo-contacts";
 
 export function getBirthday(contact: Contact): string | undefined {
@@ -12,21 +11,11 @@ export function getBirthday(contact: Contact): string | undefined {
   return new Date(birthdayString).toLocaleDateString();
 }
 
-export function filterContacts(
-  sections: ContactsSection[],
-  q: string,
-): ContactsSection[] {
-  if (q === "") return sections;
+export function filterContacts(contacts: Contact[], q: string): Contact[] {
+  if (q === "") return contacts;
 
   const qLowercase = q.toLowerCase();
-  const res = sections
-    .map((section) => ({
-      ...section,
-      data: section.data.filter((contact) =>
-        contact.name.toLowerCase().includes(qLowercase),
-      ),
-    }))
-    .filter((section) => section.data.length > 0);
+  const res = contacts.filter((contact) => contact.name.includes(qLowercase));
 
   return res;
 }

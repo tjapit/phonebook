@@ -67,6 +67,7 @@ export const contactsSlice = createSlice({
         if (!action.payload) return;
         state.loading = false;
         state.data = action.payload;
+        state.data.sort((a, b) => a.name.localeCompare(b.name));
       })
       .addCase(fetchContacts.rejected, (state, action) => {
         state.loading = false;
