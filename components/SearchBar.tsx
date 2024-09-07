@@ -1,20 +1,43 @@
-import { TextInput } from "react-native";
-import React from "react";
+import { StyleSheet, TextInput } from "react-native";
+import React, { useState } from "react";
+import { clsx } from "clsx";
+import Colors from "@/constants/Colors";
 
 interface SearchBarProps {
   query: string;
   onQueryChange: (query: string) => void;
+  disabled: boolean;
 }
 
-const SearchBar = ({ query, onQueryChange }: SearchBarProps) => {
+const SearchBar = ({ query, onQueryChange, disabled }: SearchBarProps) => {
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <TextInput
-      className="mb-4 p-4 bg-white rounded-3xl text-xl"
+      className={clsx(
+        "mb-4 p-4 bg-white rounded-3xl text-xl",
+        disabled && "bg-gray-300",
+        isFocused && "bg-white/90",
+      )}
       value={query}
       autoCapitalize="none"
       onChangeText={onQueryChange}
+      style={isFocused ? styles.shadows : {}}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
+      editable={!disabled}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  shadows: {
+    shadowOffset: { width: 4, height: 2 },
+    shadowRadius: 20,
+    shadowOpacity: 1,
+    elevation: 25,
+    shadowColor: Colors.dark,
+  },
+});
 
 export default SearchBar;

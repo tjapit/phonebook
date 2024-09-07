@@ -10,15 +10,27 @@ const ContactsList = () => {
     useContactsSections();
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return (
+      <View className="flex-1 justify-between">
+        <SearchBar
+          query={query}
+          onQueryChange={handleChangeQuery}
+          disabled={true}
+        />
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
   if (error) {
     return <Text className="text-xl text-red-400">Error: {error}</Text>;
   }
   return (
-    <View className="flex-1 justify-between gap-2">
-      <SearchBar query={query} onQueryChange={handleChangeQuery} />
-      <FavoriteBar />
+    <View className="flex-1 justify-between">
+      <SearchBar
+        query={query}
+        onQueryChange={handleChangeQuery}
+        disabled={loading}
+      />
       <SectionList
         sections={contactsSections}
         keyExtractor={(contact, index) => contact.name + index}
