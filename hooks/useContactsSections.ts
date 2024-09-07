@@ -1,11 +1,13 @@
 import { ContactsSection } from "@/constants/models";
 import { useAppDispatch, useAppSelector } from ".";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchContacts } from "@/store/features/contacts/contactsSlice";
+import { filterContacts } from "@/utils";
 
 export function useContactsSections() {
   const dispatch = useAppDispatch();
   const { data, loading, error } = useAppSelector((state) => state.contacts);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -23,12 +25,22 @@ export function useContactsSections() {
 
       section.data.push(contact);
 
-      return sections;
+      sections
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .forEach((section) =>
+          section.data.sort((a, b) => a.name.localeCompare(b.name)),
+        );
+
+      return query ? filterContacts(sections, query) : sections;
     },
     [],
   );
 
-  contactsSections.sort((a, b) => a.title.localeCompare(b.title));
+  const handleChangeQuery = (q: string): ContactsSection[] => {
+    const qLowercase = q.toLowerCase();
+    setQuery(qLowercase);
+    return filterContacts(contactsSections, qLowercase);
+  };
 
-  return { contactsSections, loading, error };
+  return { contactsSections, loading, error, query, handleChangeQuery };
 }

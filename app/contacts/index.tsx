@@ -1,37 +1,13 @@
-import { Text, ActivityIndicator, TextInput } from "react-native";
-import React, { useState } from "react";
+import { Text, ActivityIndicator } from "react-native";
+import React from "react";
 import AppGradient from "@/components/AppGradient";
 import { useContactsSections } from "@/hooks/useContactsSections";
 import ContactsList from "@/components/ContactsList";
-import { ContactsSection } from "@/constants/models";
+import SearchBar from "@/components/SearchBar";
 
 const ContactsListScreen = () => {
-  const [query, setQuery] = useState("");
-  const { contactsSections, loading, error } = useContactsSections();
-  const [filteredData, setFilteredData] =
-    useState<ContactsSection[]>(contactsSections);
-
-  const handleChangeQuery = (query: string) => {
-    const lowerCaseQuery = query.toLowerCase();
-    setQuery(lowerCaseQuery);
-
-    if (lowerCaseQuery === "") {
-      setFilteredData(contactsSections);
-    } else {
-      setFilteredData(
-        contactsSections
-          .map(
-            (section): ContactsSection => ({
-              ...section,
-              data: section.data.filter((contact) =>
-                contact.name.toLowerCase().includes(lowerCaseQuery),
-              ),
-            }),
-          )
-          .filter((section) => section.data.length > 0),
-      );
-    }
-  };
+  const { contactsSections, loading, error, query, handleChangeQuery } =
+    useContactsSections();
 
   if (loading) {
     return (
@@ -50,13 +26,8 @@ const ContactsListScreen = () => {
   return (
     <AppGradient>
       <Text className="my-10 text-4xl text-white font-bold">Contacts</Text>
-      <TextInput
-        className="mb-4 p-4 bg-white rounded-3xl text-xl"
-        value={query}
-        autoCapitalize="none"
-        onChangeText={handleChangeQuery}
-      />
-      <ContactsList data={filteredData} />
+      <SearchBar query={query} onQueryChange={handleChangeQuery} />
+      <ContactsList data={contactsSections} />
     </AppGradient>
   );
 };
