@@ -1,7 +1,7 @@
 import { Text, Pressable } from "react-native";
 import React from "react";
-import AppGradient from "@/components/AppGradient";
-import ContactsList from "@/components/ContactsList";
+import { AppGradient } from "@/components/";
+import { ContactsList } from "@/components/contact-list";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 

@@ -1,6 +1,5 @@
-import { View, Text, TextInput, Pressable, Button } from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
 import React from "react";
-import AppGradient from "@/components/AppGradient";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { router } from "expo-router";
 import {
@@ -9,6 +8,7 @@ import {
   Fields,
   requestPermissionsAsync,
 } from "expo-contacts";
+import { AppGradient } from "@/components";
 
 interface FormData {
   firstName: string;

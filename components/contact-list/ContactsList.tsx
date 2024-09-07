@@ -9,11 +9,13 @@ import React from "react";
 import { router } from "expo-router";
 import { useAppDispatch } from "@/hooks";
 import { selectContact } from "@/store/features/contacts/selectedContactSlice";
-import Separator from "./Separator";
-import FavoriteButton from "./FavoriteButton";
-import DeleteButton from "./DeleteButton";
 import { useContactsSections } from "@/hooks/useContactsSections";
-import SearchBar from "./SearchBar";
+import {
+  FavoriteButton,
+  DeleteButton,
+  SearchBar,
+  Separator,
+} from "@/components";
 import FavoriteBar from "./FavoriteBar";
 
 const ContactsList = () => {

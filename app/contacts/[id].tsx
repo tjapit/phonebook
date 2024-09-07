@@ -1,10 +1,10 @@
 import { Pressable, Text, View } from "react-native";
 import React from "react";
 import { router } from "expo-router";
-import AppGradient from "@/components/AppGradient";
 import { useAppSelector } from "@/hooks";
 import { AntDesign } from "@expo/vector-icons";
-import ContactCard from "@/components/contact-details/ContactCard";
+import { ContactCard } from "@/components/contact-details/";
+import { AppGradient } from "@/components";
 
 const ContactDetailsScreen = () => {
   const { data: contact } = useAppSelector((state) => state.selectedContact);

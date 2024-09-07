@@ -2,10 +2,9 @@ import { View, Text, Image, FlatList } from "react-native";
 import React from "react";
 import { Contact } from "expo-contacts";
 import { Ionicons } from "@expo/vector-icons";
-import Separator from "../Separator";
-import ContactDetailContainer from "./ContactDetailContainer";
 import { getBirthday } from "@/utils";
-import FavoriteButton from "../FavoriteButton";
+import { FavoriteButton, Separator } from "@/components";
+import ContactDetailContainer from "./ContactDetailContainer";
 
 interface ContactCardProps {
   contact: Contact;

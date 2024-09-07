@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, Pressable } from "react-native";
 import React from "react";
-import AppGradient from "@/components/AppGradient";
 import { router } from "expo-router";
+import { AppGradient } from "@/components";
 
 const App = () => {
   return (
